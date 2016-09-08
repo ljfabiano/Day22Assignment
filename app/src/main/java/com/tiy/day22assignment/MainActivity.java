@@ -15,7 +15,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ListView list;
     EditText text;
     Button addButton;
+    ChatClient myClient;
     ArrayAdapter<String> items;
+//    public static void main(String[] args) {
+//        //new MainActivity
+//        ChatClient myClient = new ChatClient();
+//        myClient.runClient();
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,18 +31,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         list = (ListView) findViewById(R.id.listView);
         text = (EditText) findViewById(R.id.editText);
         addButton = (Button) findViewById(R.id.button);
+
         items = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
         list.setAdapter(items);
         addButton.setOnClickListener(this);
         list.setOnItemLongClickListener(this);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+        myClient = new ChatClient();
+        myClient.runClient();
     }
     @Override
     public void onClick(View v) {
+        //when the user taps the send button, send a chat message to your server
         String item = text.getText().toString();
         items.add(item);
         text.setText("");
+//        ChatClient.class;
+        myClient.sendMessage(item);
     }
 
     @Override
